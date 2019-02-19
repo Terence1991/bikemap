@@ -1,5 +1,5 @@
 import React from 'react'
-import SearchBar from './components/searchbar.js'
+import SearchBar from './SearchBar'
 
 const App = () => {
   return (
