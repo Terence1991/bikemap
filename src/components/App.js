@@ -1,7 +1,7 @@
 import React from 'react'
 import SearchBar from './SearchBar'
 
-class App extends React.Comonent {
+class App extends React.Component {
 
   onTermSubmit = (term) => {
     console.log(term)
