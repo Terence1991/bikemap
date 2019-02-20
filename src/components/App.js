@@ -1,6 +1,7 @@
 import React from 'react'
 import SearchBar from './SearchBar'
 import axios from 'axios';
+import StationList from './StationList'
 
 class App extends React.Component {
   state = {stations: []}
@@ -17,7 +18,7 @@ class App extends React.Component {
     return (
     <div>
       <SearchBar onTermSubmit={this.onTermSubmit}/>
-      I have: {this.state.stations.length}
+      <StationList stations={this.state.stations}/>
     </div>
   )
   }
