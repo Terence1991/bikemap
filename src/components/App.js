@@ -1,13 +1,20 @@
 import React from 'react'
 import SearchBar from './SearchBar'
 
-const App = () => {
-  return (
+class App extends React.Comonent {
+
+  onTermSubmit = (term) => {
+    console.log(term)
+  }
+
+  render() {
+    return (
     <div>
-      <SearchBar />
+      <SearchBar onTermSubmit={this.onTermSubmit}/>
     </div>
   )
-}
+  }
 
+}
 
 export default App;
