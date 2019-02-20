@@ -2,6 +2,7 @@ import React from 'react'
 import SearchBar from './SearchBar'
 import axios from 'axios';
 import StationList from './StationList'
+import Header from './Header'
 
 class App extends React.Component {
   state = {stations: []}
@@ -14,11 +15,16 @@ class App extends React.Component {
     })
   }
 
+  selectedStation(station) {
+    console.log('SELECTED STATION: ', station)
+  }
+
   render() {
     return (
     <div>
+      <Header/>
       <SearchBar onTermSubmit={this.onTermSubmit}/>
-      <StationList stations={this.state.stations}/>
+      <StationList stations={this.state.stations} selectedStation={this.selectedStation} />
     </div>
   )
   }
