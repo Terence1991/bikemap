@@ -1,9 +1,13 @@
 import React from 'react'
+import StationItem from './StationItem'
 
 
-const StationList = (props) => {
+const StationList = ({stations}) => {
+ const renderedList = stations.map((station) => {
+    return <StationItem />
+  })
   return (
-    <div>{props.stations.length}</div>
+    <div>{renderedList}</div>
   )
 }
 
