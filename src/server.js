@@ -15,7 +15,6 @@ app.get('/', (req, res) => {
 });
 
 app.get('/stations', (req, res) => {
-  console.log(req.query)
   axios.get('https://feeds.citibikenyc.com/stations/stations.json', {
     query: 'new york',
     headers: {
@@ -23,7 +22,7 @@ app.get('/stations', (req, res) => {
     }
   })
   .then(stations => {
-    res.json(stations.data);
+    res.json(stations.data.stationBeanList);
   })
   .catch(e => console.error(e));
 })
