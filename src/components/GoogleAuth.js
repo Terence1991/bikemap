@@ -5,8 +5,6 @@ import {signIn, signOut} from '../actions'
 
 
 class GoogleAuth extends React.Component {
-  state = {isSignedIn: null}
-
   componentDidMount() {
     window.gapi.load('client', () => {
       window.gapi.client.init({
@@ -64,5 +62,11 @@ class GoogleAuth extends React.Component {
     )
   }
 }
+
+const mapStateToProps = (state) => {
+  return { isSignedIn: state.auth.isSignedIn}
+}
+
+
 
 export default connect(null,{signIn, signOut})(GoogleAuth) 
