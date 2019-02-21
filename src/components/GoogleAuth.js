@@ -4,9 +4,16 @@ import {signIn, signOut} from '../actions'
 import styled from 'styled-components';
 
 const Button = styled.div`
-  padding: 1rem;
-  background-color: red;
-  border-radius: 2px;
+    color: red;
+    background: #F3F3F3;
+    border: 1px #DADADA solid;
+    padding: 5px 10px;
+    border-radius: 2px;
+    font-weight: bold;
+    font-size: 9pt;
+    outline: none;
+    text-align: center;
+    width: 100px; 
 `
 
 

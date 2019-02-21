@@ -4,14 +4,18 @@ import StationItem from './StationItem'
 
 // Declare your styled component here, give it css
 const StyledStationList = styled.div`
-  border-color: red;
-  width: 100px;
+  width: 300px;
 `;
 
 
-const StationList = ({stations, selectStation }) => {
-  const renderedList = stations.slice(0, 10).map((station) => {
-    return <StationItem key={station.id} station={station} selectStation={selectStation} />
+const StationList = ({stations, selectStation, nextPage, pageSkip }) => {
+  const renderedList = stations.map((station) => {
+    const renderItem = station.testStation === false && station.statusValue === "In Service";
+
+    if (renderItem) {
+      return <StationItem key={station.id} station={station} selectStation={selectStation} nextPage={nextPage} pageSkip={pageSkip} />
+    }
+    return null;
   })
 
   return (
