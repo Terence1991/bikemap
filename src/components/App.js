@@ -1,11 +1,18 @@
-import React from 'react'
-import SearchBar from './SearchBar'
+import React from 'react';
+import SearchBar from './SearchBar';
 import axios from 'axios';
-import StationList from './StationList'
-import Header from './Header'
+import styled from 'styled-components';
+import StationList from './StationList';
+import StationDetail from './StationDetail'
+import Header from './Header';
+
+const StationsWrapper = styled.div`
+  display: flex;
+  border-color: black; 
+`
 
 class App extends React.Component {
-  state = {stations: []}
+  state = {stations: [], selectedStation: {}}
 
   onTermSubmit = (term) => {
     axios.get('http://localhost:5000/stations', {
@@ -15,16 +22,22 @@ class App extends React.Component {
     })
   }
 
-  selectedStation(station) {
-    console.log('SELECTED STATION: ', station)
+  selectStation = (station) => {
+    this.setState({ selectedStation: station })
   }
 
   render() {
+    const { selectedStation } = this.state;
+
     return (
     <div>
       <Header/>
       <SearchBar onTermSubmit={this.onTermSubmit}/>
-      <StationList stations={this.state.stations} selectedStation={this.selectedStation} />
+
+      <StationsWrapper>
+        <StationList stations={this.state.stations} selectStation={this.selectStation} />
+         <StationDetail station={this.state.selectedStation}/>
+        </StationsWrapper>
     </div>
   )
   }

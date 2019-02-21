@@ -4,9 +4,9 @@ import React from 'react'
 //onhover in react  then add others things
 
 
-const StationItem = ({ station, selectedStation }) => {
+const StationItem = ({ station, selectStation }) => {
   return (
-    <div style={{ padding: '2rem' }} onMouseOver={() => selectedStation(station)} >
+    <div style={{ padding: '2rem' }} onMouseOver={() => selectStation(station)} >
       {station.stationName}
       <div>
         Bikes Available:  {station.availableBikes / station.totalDocks} %
