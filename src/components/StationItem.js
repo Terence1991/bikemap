@@ -1,7 +1,5 @@
 import React from 'react'
-//stationName
-//availableBikes / totalDocks
-//onhover in react  then add others things
+
 
 
 const StationItem = ({ station, selectStation, nextPage, pageSkip }) => {
