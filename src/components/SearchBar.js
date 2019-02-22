@@ -1,11 +1,13 @@
 import React from 'react'
 import styled from 'styled-components';
-
+import { connect } from 'react-redux'
+import { onSearchChange, onTermSubmit } from '../reducers/searchReducer';
 
 const StyledForm = styled.form`
-width: 300px;
+  width: 300px;
   display: block;
   margin: 0 auto;
+  border-radius: 2px;
 `
 
 const StyledInput = styled.input`
@@ -17,9 +19,6 @@ const StyledInput = styled.input`
   border: 1px solid #D0CFCE;
   outline: none;
 
-  margin
-
-
   &:focus{
     border: 1px solid #008ABF;
     transition: 0.35s ease;
@@ -30,7 +29,6 @@ const StyledInput = styled.input`
       opacity: 0;
       }    
    }
-
 `
 
 const StyledIcon = styled.img`
@@ -43,25 +41,36 @@ const StyledIcon = styled.img`
 `
 
 class SearchBar extends React.Component {
-    state = {term: ''}
+  onInputChange = (event) => {
+    this.props.onSearchChange(event.target.value.toLowerCase());
+  }
 
-    onInputChange = (event) => {
-      this.setState({term: event.target.value})
-    }
+  onFormSubmit = (event) => {
+    event.preventDefault();
+    this.props.onTermSubmit() 
+  } 
 
-    onFormSubmit = (event) => {
-      event.preventDefault()
-      
-      this.props.onTermSubmit(this.state.term) 
-    } 
   render() {
     return(
         <StyledForm onSubmit={this.onFormSubmit}>
             <StyledIcon alt="search"src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png"/>
-            <StyledInput placeholder='Find A Station..' type="text" value={this.state.term} onChange={this.onInputChange}/> 
+            <StyledInput 
+              placeholder='Find A Station..' 
+              type="text" 
+              value={this.props.term} 
+              onChange={this.onInputChange}
+            /> 
         </StyledForm>
     )
   }
 }
+const mapStateToProps = ({ search }) => {
+  return {
+    term: search.searchTerm
+  }
+}
 
-export default SearchBar;
+export default connect(mapStateToProps, {
+  onSearchChange, 
+  onTermSubmit
+})(SearchBar);

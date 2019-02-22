@@ -1,51 +1,33 @@
 import React from 'react'
 import styled from 'styled-components';
 
-const StyledStationDeatil = styled.div`
-padding: 2rem;
-width: 100%;
-font-size: 2rem;
-outline-style: solid;
-outline-color: #C1B7B7;
-outline-width: thin;
-`
-
-const StyledHeader = styled.header`
-  position: relative;
-  width: 100%;
-  height: 6rem;
-  color: white;
-  background: #730EF7;
-  line-height: 6rem;
-  transform: translateY(0);
-  transform: translate3d(0,0,0);
-  transition: .25s transform;
-  border-radius: 5px;
+const StationName = styled.h1`
  
- `
+`
+const StationInformation = styled.p`
 
-const StationDetail = ({station}) => {
+`;
+
+const StationDetail = ({ station }) => {
+  const { 
+    stationName,
+    availableDocks, 
+    totalDocks, 
+    latitude, 
+    longitude, 
+    lastCommunicationTime
+  } = station;
+
   return (
-    <StyledStationDeatil>
-    <div> 
-      <StyledHeader>
-      Bike Station Details
-      </StyledHeader>
-       Docks Available: {station.availableDocks}
-      <div>
-       Total Docks:{station.totalDocks}
-      </div>
-      <div>
-        Latitude: {station.latitude}
-      </div>
-      <div>
-        Longtitude: {station.longitude}
-      </div>
-      <div>
-        Last Comunication Time: {station.lastCommunicationTime}
-      </div>
-    </div>
-  </StyledStationDeatil>
+    <div>
+      <StationName>Bike Station Details</StationName>
+      <h2>{stationName}</h2>
+      <StationInformation>Docks Available: {availableDocks}</StationInformation>
+      <StationInformation>Total Docks: {totalDocks}</StationInformation>
+      <StationInformation>Latitude: {latitude.toFixed(2)}</StationInformation>
+      <StationInformation>Longtitude: {longitude.toFixed(2)}</StationInformation>
+      <StationInformation>Last Comunication Time: {lastCommunicationTime.toString()}</StationInformation> 
+  </div>
   )
 }
 

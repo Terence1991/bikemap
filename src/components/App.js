@@ -5,9 +5,12 @@ import styled from 'styled-components';
 import StationList from './StationList';
 import StationDetail from './StationDetail'
 import Header from './Header';
+import { setAllStations, nextPage, previousPage, RESULTS_PER_PAGE } from '../reducers/searchReducer';
+import { connect } from 'react-redux'
 
-
-const AppConatainer = styled.div`
+const AppWrapper = styled.div`
+`
+const Conatainer = styled.div`
   display: flex;
   flex-direction: row;
   max-width: 800px;
@@ -20,79 +23,114 @@ const SearchContainer = styled.div`
 const DetailsContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 500px;
+  padding: 0 24px;
+`
+const PaginationBtnGroup = styled.div`
+  display: flex;
+`;
 
+const PaginationBtn = styled.div`
+  cursor: pointer;
+  padding-right: 16px;
+  &:hover {
+    color: blue;
+    text-decoration: underline;
+  }
 `
 
 class App extends React.Component {
-  pageSkip = 12;
-  state = { stations: [], selectedStation: {}, page: 0 }
+  state = { 
+    selectedStation: null,  
+  }
 
-  onTermSubmit = (term) => {
+  componentDidMount() {
     axios.get('http://localhost:5000/stations', {
-      query: term,
     }).then(res => {
-      this.setState({ stations: res.data })
-    })
+      this.props.setAllStations(res.data)
+    });
   }
 
   selectStation = (station) => {
     this.setState({ selectedStation: station })
   }
   
-  nextPage = (n) => {
-    const { stations, page } = this.state;
 
-    const stopCondition = ((page + n) > stations.length)
-      ? true
-      : false;
+  renderPagitionBtns = () => {
+    const { stations, currentPage, nextPage, previousPage } = this.props;
+    const maxCondtion = currentPage * RESULTS_PER_PAGE >= stations.length;
+    const minCondition = !(currentPage * RESULTS_PER_PAGE);
 
-    if (stopCondition) {
-      return this.setState({ page: 0 })
+    if (minCondition && stations.length > RESULTS_PER_PAGE) {
+      return <PaginationBtn onClick={nextPage}>Next</PaginationBtn>
+    } else  if (!minCondition && !maxCondtion) {
+      return (
+        <PaginationBtnGroup>
+          <PaginationBtn onClick={previousPage}>Previous</PaginationBtn>
+          <PaginationBtn onClick={nextPage}>Next</PaginationBtn>
+        </PaginationBtnGroup>
+      )
+    } else if (maxCondtion && !minCondition) {
+      return <PaginationBtn onClick={previousPage}>Previous</PaginationBtn>
+    } else {
+      return null;
     }
-
-    this.setState({
-      page: page + n
-    })
   }
 
   render() {
-    const { selectedStation, stations, page } = this.state;
-    const slice = stations.slice(page, page + this.pageSkip);
-    console.log(page, stations.length)
+    const { selectedStation } = this.state;
+    const { authenicated, stations, paginationResults } = this.props;
 
     return (
-      <AppConatainer>
-        <SearchContainer>
-          <SearchBar onTermSubmit={this.onTermSubmit}/>
-          {
-            stations.length
-              ? (
-                <StationList 
-                  stations={slice}
-                  selectStation={this.selectStation}
-                  nextPage={this.nextPage}
-                  pageSkip={this.pageSkip} 
-                />
-              ) : null
-          }
-        </SearchContainer>
-        <DetailsContainer>
- gggg
-        </DetailsContainer>
-      </AppConatainer>
-
-    // <div>
-    //   <Header/>
-    //   <SearchBar onTermSubmit={this.onTermSubmit}/>
-
-    //   <StationsWrapper>
-    //      <StationList stations={slice} selectStation={this.selectStation} nextPage={this.nextPage} pageSkip={this.pageSkip} />
-    //      <StationDetail station={this.state.selectedStation}/>
-    //   </StationsWrapper>
-    // </div>
-  )
+      <AppWrapper>
+        <Header />
+        {
+          !authenicated
+            ? <div>In order to use the app you need to sign in.</div>
+            : (
+              <Conatainer>
+                <SearchContainer>
+                  <SearchBar />
+                  {
+                    stations.length
+                      ? (
+                        <div>
+                          <StationList 
+                            stations={paginationResults}
+                            selectStation={this.selectStation}
+                          />
+                          {this.renderPagitionBtns()}
+                        </div>
+                      ) : <div>No Results</div>
+                  }
+                </SearchContainer>
+                <DetailsContainer>
+                  {
+                    stations.length && selectedStation
+                      ? <StationDetail station={selectedStation}/>
+                      : null
+                  }
+                </DetailsContainer>
+              </Conatainer>
+            )
+        }
+      </AppWrapper>
+    )
   }
-
 }
 
-export default App;
+const mapStateToProps = ({ auth, search }) =>  {
+  return { 
+    authenicated: auth.isSignedIn,
+    stations: search.stations,
+    totalStations: search.totalStations,
+    currentPage: search.currentPage,
+    paginationResults: search.paginationResults
+  }
+};
+
+export default connect(mapStateToProps, {
+  setAllStations,
+  previousPage, 
+  nextPage
+})(App);

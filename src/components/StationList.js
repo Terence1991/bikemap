@@ -9,6 +9,7 @@ const StyledStationList = styled.ul`
   margin-top: 0;
   border: 1px solid #D0CFCE;
   padding: 0;
+  border-radius: 2px;
 
   li:first-child {
     border-top: none;
@@ -19,13 +20,18 @@ const StyledStationList = styled.ul`
   }
 `;
 
-
-const StationList = ({stations, selectStation, nextPage, pageSkip }) => {
+const StationList = ({stations, selectStation }) => {
   const renderedList = stations.map((station) => {
     const renderItem = station.testStation === false && station.statusValue === "In Service";
 
     if (renderItem) {
-      return <StationItem key={station.id} station={station} selectStation={selectStation} nextPage={nextPage} pageSkip={pageSkip} />
+      return (
+        <StationItem 
+          key={station.id} 
+          station={station} 
+          selectStation={selectStation} 
+        />
+      )
     }
     return null;
   })

@@ -1,22 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {signIn, signOut} from '../actions'
+import { resetSearch } from '../reducers/searchReducer'
+import { signIn, signOut } from '../reducers/authReducer'
 import styled from 'styled-components';
 
 const Button = styled.div`
-    color: red;
-    background: #F3F3F3;
-    border: 1px #DADADA solid;
-    padding: 5px 10px;
-    border-radius: 2px;
-    font-weight: bold;
-    font-size: 9pt;
-    outline: none;
-    text-align: center;
-    width: 100px; 
+  background: #F3F3F3;
+  border: 1px #DADADA solid;
+  padding: 5px 10px;
+  border-radius: 2px;
+  font-weight: bold;
+  font-size: 9pt;
+  outline: none;
+  text-align: center;
+  width: 100px;
+  text-transform: uppercase;
 `
-
-
 
 class GoogleAuth extends React.Component {
   componentDidMount() {
@@ -35,9 +34,10 @@ class GoogleAuth extends React.Component {
   onAuthChange = (isSignedIn) => {
    if(isSignedIn) {
      this.props.signIn(this.auth.currentUser.get().getId())
-   } else {
-     this.props.signOut()
-   }
+    } else {
+      this.props.resetSearch()
+      this.props.signOut()
+    }
   }
 
   onSignInClick = () => {
@@ -45,6 +45,7 @@ class GoogleAuth extends React.Component {
   }
 
   onSignOutClick = () => {
+    this.props.resetSearch()
     this.auth.signOut()   
   }
 
@@ -54,9 +55,9 @@ class GoogleAuth extends React.Component {
     } else if (this.props.isSignedIn) {
       return (
         <div>
-          <Button onClick={this.onSignOutClick} className='ui red google button'>
+          <Button onClick={this.onSignOutClick}>
             <i/>
-            SignOut
+            Sign Out
           </Button>
         </div>
         
@@ -64,14 +65,14 @@ class GoogleAuth extends React.Component {
     } else {
       return (
         <div>
-          <Button onClick={this.onSignInClick} className='red google button'>
+          <Button onClick={this.onSignInClick}>
             <i/>
-            Sign in with google
+            Login
           </Button>
         </div>
       )
     }
-}
+  }
 
   render() {
     return (
@@ -84,7 +85,10 @@ class GoogleAuth extends React.Component {
 
 const mapStateToProps = (state) => {
   return { isSignedIn: state.auth.isSignedIn}
-
 }
 
-export default connect(mapStateToProps,{signIn, signOut})(GoogleAuth) 
+export default connect(mapStateToProps,{ 
+  signIn, 
+  signOut,
+  resetSearch
+})(GoogleAuth) 
