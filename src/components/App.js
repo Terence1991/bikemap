@@ -6,9 +6,21 @@ import StationList from './StationList';
 import StationDetail from './StationDetail'
 import Header from './Header';
 
-const StationsWrapper = styled.div`
+
+const AppConatainer = styled.div`
   display: flex;
-  border-color: black; 
+  flex-direction: row;
+  max-width: 800px;
+`
+const SearchContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+`
+const DetailsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
 `
 
 class App extends React.Component {
@@ -43,22 +55,41 @@ class App extends React.Component {
     })
   }
 
-
   render() {
     const { selectedStation, stations, page } = this.state;
     const slice = stations.slice(page, page + this.pageSkip);
     console.log(page, stations.length)
 
     return (
-    <div>
-      <Header/>
-      <SearchBar onTermSubmit={this.onTermSubmit}/>
+      <AppConatainer>
+        <SearchContainer>
+          <SearchBar onTermSubmit={this.onTermSubmit}/>
+          {
+            stations.length
+              ? (
+                <StationList 
+                  stations={slice}
+                  selectStation={this.selectStation}
+                  nextPage={this.nextPage}
+                  pageSkip={this.pageSkip} 
+                />
+              ) : null
+          }
+        </SearchContainer>
+        <DetailsContainer>
+ gggg
+        </DetailsContainer>
+      </AppConatainer>
 
-      <StationsWrapper>
-         <StationList stations={slice} selectStation={this.selectStation} nextPage={this.nextPage} pageSkip={this.pageSkip} />
-         <StationDetail station={this.state.selectedStation}/>
-      </StationsWrapper>
-    </div>
+    // <div>
+    //   <Header/>
+    //   <SearchBar onTermSubmit={this.onTermSubmit}/>
+
+    //   <StationsWrapper>
+    //      <StationList stations={slice} selectStation={this.selectStation} nextPage={this.nextPage} pageSkip={this.pageSkip} />
+    //      <StationDetail station={this.state.selectedStation}/>
+    //   </StationsWrapper>
+    // </div>
   )
   }
 

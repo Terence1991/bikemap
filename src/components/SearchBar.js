@@ -2,8 +2,8 @@ import React from 'react'
 import styled from 'styled-components';
 
 
-const StyledContainer = styled.form`
-width: 490px;
+const StyledForm = styled.form`
+width: 300px;
   display: block;
   margin: 0 auto;
 `
@@ -11,28 +11,24 @@ width: 490px;
 const StyledInput = styled.input`
   position: absolute;
   margin: 0 auto;
-  width: 100%;
+  width: 300px;
   height: 45px;
-  padding: 0 20px;
   font-size: 1rem;
   border: 1px solid #D0CFCE;
   outline: none;
+
+  margin
+
+
   &:focus{
     border: 1px solid #008ABF;
     transition: 0.35s ease;
     color: #008ABF;
-    &::-webkit-input-placeholder{
+
+    &:placeholder {
       transition: opacity 0.45s ease; 
-  	  opacity: 0;
-     }
-    &::-moz-placeholder {
-      transition: opacity 0.45s ease; 
-  	  opacity: 0;
-     }
-    &:-ms-placeholder {
-     transition: opacity 0.45s ease; 
-  	 opacity: 0;
-     }    
+      opacity: 0;
+      }    
    }
 
 `
@@ -40,20 +36,11 @@ const StyledInput = styled.input`
 const StyledIcon = styled.img`
   position: relative;
   float: right;
-  width: 75px;
+  right: -16px;
   height: 75px;
-  top: -62px;
-  right: -45px;
-  top:50%; 
-  transform: translateY(-20%);
+  top: -12px; 
   z-index: 5;
 `
-
-const StyledDiv = styled.div`
-position: relative;
-
-`
-
 
 class SearchBar extends React.Component {
     state = {term: ''}
@@ -69,16 +56,10 @@ class SearchBar extends React.Component {
     } 
   render() {
     return(
-      <div>
-        <StyledContainer>
-           <form onSubmit={this.onFormSubmit}>
-          <StyledDiv>
+        <StyledForm onSubmit={this.onFormSubmit}>
             <StyledIcon alt="search"src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png"/>
-            <StyledInput placeholder='Find A Station..' type="text" value={this.state.term} onChange={this.onInputChange}/>
-          </StyledDiv> 
-        </form>
-        </StyledContainer>
-      </div>
+            <StyledInput placeholder='Find A Station..' type="text" value={this.state.term} onChange={this.onInputChange}/> 
+        </StyledForm>
     )
   }
 }
