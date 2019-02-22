@@ -8,6 +8,7 @@ const StyledForm = styled.form`
   display: block;
   margin: 0 auto;
   border-radius: 2px;
+  padding-left: 4px;
 `
 
 const StyledInput = styled.input`

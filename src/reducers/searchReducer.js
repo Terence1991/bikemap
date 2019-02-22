@@ -120,15 +120,21 @@ export default (state = INITIAL_STATE, action) => {
       }
     }
     case actionsTypes.nextPage: {
+      const { currentPage, stations } = state;
+      const nextPage = currentPage + 1;
       return {
         ...state,
-        currentPage: state.currentPage + 1
+        currentPage: nextPage,
+        paginationResults: paginationResults(stations, nextPage)
       }
     }
     case actionsTypes.previousPage: {
+      const { currentPage, stations } = state;
+      const prevPage = Math.max(0, currentPage - 1);
       return {
         ...state,
-        currentPage: state.currentPage - 1
+        currentPage: prevPage,
+        paginationResults: paginationResults(stations, prevPage)
       }
     }
     default: {
@@ -136,4 +142,4 @@ export default (state = INITIAL_STATE, action) => {
     }
   }
 }
- 
+  

@@ -9,6 +9,7 @@ import { setAllStations, nextPage, previousPage, RESULTS_PER_PAGE } from '../red
 import { connect } from 'react-redux'
 
 const AppWrapper = styled.div`
+  font-family: 'Roboto', sans-serif;
 `
 const Conatainer = styled.div`
   display: flex;
@@ -28,11 +29,15 @@ const DetailsContainer = styled.div`
 `
 const PaginationBtnGroup = styled.div`
   display: flex;
-`;
-
+`
 const PaginationBtn = styled.div`
   cursor: pointer;
-  padding-right: 16px;
+  margin-right: 8px;
+  padding: 4px 8px;
+  display: inline-block;
+  border:1px solid #4c97da;
+  transition: all 0.2s ease-in-out;
+  border-radius:3px;
   &:hover {
     color: blue;
     text-decoration: underline;

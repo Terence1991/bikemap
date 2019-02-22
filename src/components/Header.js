@@ -14,7 +14,6 @@ const Header = styled.div`
 `;
 
 const AppTitle = styled.h1`
-  font-style: italic;
   color: white;
 `
 export default () => (
