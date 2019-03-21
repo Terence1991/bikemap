@@ -1,5 +1,5 @@
 # Hawes Magic Bike App
-Welcome to my magic bike app. To run the client please run the following command:
+Welcome to my magic bike app. To run the client please run the following command on port 3001:
 
 `npm run start`
 
