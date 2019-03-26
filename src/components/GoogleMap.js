@@ -1,7 +1,10 @@
 import React from 'react'
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
+const style = {width: '50%', height: '100%'}
+
 export class MapContainer extends React.Component {
+
   render() {
     return (
       <Map google={this.props.google} zoom={14}>
