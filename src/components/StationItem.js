@@ -24,7 +24,7 @@ const StationItem = ({ station, selectStation }) => {
   const {availableBikes, totalDocks} = station
   return (
     <ListItem 
-      onMouseOver={() => selectStation(station)}
+      onClick={() => selectStation(station)}
     >
       <StationName>{station.stationName}</StationName>
       <Availability>Bikes Available: {formatAvailability(availableBikes, totalDocks)}%</Availability>

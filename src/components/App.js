@@ -69,7 +69,7 @@ class App extends React.Component {
 
     if (minCondition && stations.length > RESULTS_PER_PAGE) {
       return <PaginationBtn onClick={nextPage}>Next</PaginationBtn>
-    } else  if (!minCondition && !maxCondtion) {
+    } else if (!minCondition && !maxCondtion) {
       return (
         <PaginationBtnGroup>
           <PaginationBtn onClick={previousPage}>Previous</PaginationBtn>
