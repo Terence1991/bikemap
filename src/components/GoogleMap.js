@@ -6,7 +6,9 @@ const style = {width: '50%', height: '50%'}
 export class MapContainer extends React.Component {
   
   render() {
-    console.log(this.props)
+  console.log("PROPS ====== ", this.props)
+  console.log("PROPS LAT=== ", this.props.selectedStation.latitude)
+  console.log("PROPS LNG=== ", this.props.selectedStation.longitude)
     return (
       <div>
         {
@@ -15,19 +17,20 @@ export class MapContainer extends React.Component {
             : (
               <Map  
                 style={style}
-                center={{ lat: this.props.latitude, lng: this.props.longitude}}
+                initialCenter={{ lat: this.props.selectedStation.latitude, lng: this.props.selectedStation.longitude}}
+                // center={{ lat: this.props.latitude, lng: this.props.longitude}}
                 google={this.props.google} 
                 zoom={14}
               >
-{/*         
+     
                 <Marker onClick={this.onMarkerClick}
-                        name={'statoion name'} />88.081807
+                        name={'station name'} />
         
                 <InfoWindow onClose={this.onInfoWindowClose}>
                   <div>
-                    <h1>{this.props.stationName}</h1>
+                    <h1>{this.props.selectedStation.stationName}</h1>
                   </div>
-                </InfoWindow> */}
+                </InfoWindow>
               </Map>
           )
         }
@@ -39,5 +42,5 @@ export class MapContainer extends React.Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyANfpQCMpGyStCHLF7cnOC50ZlzTe6TqUg',
+  apiKey: 'AIzaSyCaAIKyfp5gp7gKq2tyaxelkfVILgpTCmQ',
 })(MapContainer)
