@@ -5,9 +5,9 @@ import styled from 'styled-components';
 import StationList from './StationList';
 import StationDetail from './StationDetail';
 import Header from './Header';
-import GoogleMap from 
+import MapContainer from './GoogleMap.js'
 import { setAllStations, nextPage, previousPage, RESULTS_PER_PAGE } from '../reducers/searchReducer';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
 const AppWrapper = styled.div`
   font-family: 'Roboto', sans-serif;
@@ -86,6 +86,7 @@ class App extends React.Component {
   render() {
     const { selectedStation } = this.state;
     const { authenicated, stations, paginationResults } = this.props;
+    console.log("this is my selected station:",selectedStation)
 
     return (
       <AppWrapper>
@@ -117,6 +118,11 @@ class App extends React.Component {
                       : null
                   }
                 </DetailsContainer>
+              {
+                stations.length && selectedStation
+                ? <MapContainer selectedStation={selectedStation}/>
+                : null
+              }
               </Conatainer>
             )
         }
